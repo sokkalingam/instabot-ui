@@ -1,2 +1,0 @@
-# instabot-ui
-Instabot UI
