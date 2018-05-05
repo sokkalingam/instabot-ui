@@ -3,6 +3,11 @@
     <div class="logo">
       <img class="logo" src="./assets/instabot-logo.png">
     </div>
+    <ul class="nav nav-pills nav-justified">
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/createjob">Create Job</router-link></li>
+      <li><router-link to="/report">View Report</router-link></li>
+    </ul>
     <router-view/>
   </div>
 </template>
@@ -22,6 +27,11 @@ export default {
   text-align: center;
   background-color: white;
   height: 100%;
+}
+
+li > a.router-link-exact-active {
+  color: #fff;
+  background-color: #337ab7;
 }
 
 html {
