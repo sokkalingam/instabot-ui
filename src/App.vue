@@ -31,7 +31,20 @@ export default {
 
 li > a.router-link-exact-active {
   color: #fff;
-  background-color: #337ab7;
+  background-color: #6b4ba0;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+  color: #fff;
+  background-color: #6b4ba0;
+}
+
+.nav-pills>li>a {
+  border-radius: 10px;
+}
+
+.nav {
+  padding-bottom: 20px;
 }
 
 html {
