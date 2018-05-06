@@ -172,19 +172,11 @@ export default {
 
 <style scoped>
 
-  #createJob, form {
+  #createJob {
     text-align: left;
     font-size: 18px;
-  }
-
-  .row {
-      padding-top: 10px;
-      padding-bottom: 10px;
-  }
-
-  .alert {
-      margin-top: 10px;
-      margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
 </style>
