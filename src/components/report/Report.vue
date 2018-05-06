@@ -70,6 +70,7 @@ export default {
           if (response.bodyText) {
             this.searchResponseText = response.bodyText;
             this.report = JSON.parse(response.bodyText);
+            this.showNoResponse = false;
           } else {
             this.showNoResponse = true;
           }

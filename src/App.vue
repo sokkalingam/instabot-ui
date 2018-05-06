@@ -8,6 +8,7 @@
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/createjob">Create Job</router-link></li>
       <li><router-link to="/report">View Report</router-link></li>
+      <li><router-link to="/abort">Abort Job</router-link></li>
     </ul>
     <router-view/>
   </div>
