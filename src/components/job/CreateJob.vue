@@ -75,6 +75,8 @@
     <button type="button" class="btn btn-lg btn-info"
       v-on:click="showForm" v-if="!formVisible">Submit Another Job</button>
 
+    <spinner v-bind:showSpinner="showSpinner"></spinner>
+
   </div>
 
 </template>
@@ -90,6 +92,7 @@ export default {
       presetName: '',
       successMessage: '',
       errorMessage: '',
+      showSpinner: false,
       formData: this.getDefaultForm()
     }
   },
@@ -129,37 +132,46 @@ export default {
       this.formData.hashtagText = this.formData.hashtags.join(", ");
     },
     runJob() {
+      this.showSpinner = true;
       this.resetMessages();
       this.hashtagTextToArray();
       this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/looplike`, this.formData)
         .then((response) => {
+          this.showSpinner = false;
           console.log(response);
           this.hideForm();
           this.successMessage = response.bodyText;
         }).catch((response) => {
+          this.showSpinner = false;
           console.log(response);
           let errorObj = response.body.errors[0];
           this.errorMessage = errorObj.defaultMessage;
         });
     },
     lookupPreset() {
+      this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetName}`)
         .then((response) => {
+          this.showSpinner = false;
           console.log(response);
           this.formData = response.body.data;
           this.hashtagArrayToText();
         }).catch((error) => {
+          this.showSpinner = false;
           console.log(error);
         });
     },
     savePreset() {
+      this.showSpinner = true;
       this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/presets/add`, {
         name: this.presetName,
         data: this.formData
       }).then((response) => {
+          this.showSpinner = false;
           console.log(response);
           this.successMessage = response.bodyText;
       }).catch((response) => {
+          this.showSpinner = false;
           console.log(response);
           let errorObj = response.body.errors[0];
           this.errorMessage = errorObj.defaultMessage;

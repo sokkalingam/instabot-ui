@@ -26,6 +26,8 @@
     <button type="button" class="btn btn-lg btn-danger"
       v-on:click="abortJob">Abort Job</button>
 
+    <spinner v-bind:showSpinner="showSpinner"></spinner>
+
   </div>
 
 </template>
@@ -40,17 +42,21 @@ export default {
         sessionId: ''
       },
       successMessage: '',
-      errorMessage: ''
+      errorMessage: '',
+      showSpinner: false
     }
   },
   methods: {
     lookupPreset() {
+      this.showSpinner = true;
       this.resetMessages();
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetName}`)
         .then((response) => {
+          this.showSpinner = false;
           console.log(response);
           this.formData.sessionId = response.body.data.sessionId;
         }).catch((error) => {
+          this.showSpinner = false;
           console.log(error);
         });
     },
@@ -59,12 +65,15 @@ export default {
       this.errorMessage = '';
     },
     abortJob() {
+      this.showSpinner = true;
       this.resetMessages();
       this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/session/kill`, this.formData.sessionId)
         .then((response) => {
+          this.showSpinner = false;
           console.log(response);
           this.successMessage = response.bodyText;
         }).catch((response) => {
+          this.showSpinner = false;
           this.errorMessage = response.bodyText;
         });
     }
