@@ -1,5 +1,5 @@
 <template>
-  <div id="overlay" v-if="showSpinner">
+  <div id="overlay" v-show="showSpinner">
     <img src="./loader.gif" alt="Loading" /><br/>
   </div>
 </template>
