@@ -20,6 +20,9 @@ String.prototype.replaceAll = function(target, replacement) {
   return this.split(target).join(replacement);
 };
 
+// For checking cache issue
+console.log("Instabot-UI", "11May2018-11:15AM");
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

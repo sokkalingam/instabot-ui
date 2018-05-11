@@ -129,7 +129,8 @@ export default {
         .toLowerCase().split(",");
     },
     hashtagArrayToText() {
-      this.formData.hashtagText = this.formData.hashtags.join(", ");
+      if (Array.isArray(this.formData.hashtags))
+        this.formData.hashtagText = this.formData.hashtags.join(", ");
     },
     runJob() {
       this.showSpinner = true;
@@ -154,7 +155,7 @@ export default {
         .then((response) => {
           this.showSpinner = false;
           console.log(response);
-          this.formData = response.body.data;
+          this.formData = this.$_.get(response, "body.data", {});
           this.hashtagArrayToText();
         }).catch((error) => {
           this.showSpinner = false;
