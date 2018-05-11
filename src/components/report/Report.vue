@@ -4,7 +4,7 @@
     <div class="row">
       <div class="form-group form-inline col-md-12">
         <label for="username">Instagram Username:</label>
-        <input type="text" v-model="username" class="form-control" id="userName">
+        <input type="text" v-model="username" class="form-control" v-on:keydown.enter="search" id="userName">
         <button type="button" v-on:click="search" class="btn btn-info">Get Report</button>
       </div>
     </div>
@@ -66,6 +66,7 @@ export default {
   },
   methods: {
     search() {
+      if (!this.username) return;
       console.log(this.username);
       this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.username}`)
@@ -77,10 +78,13 @@ export default {
             this.report = JSON.parse(response.bodyText);
             this.showNoResponse = false;
           } else {
+            this.searchResponseText = '';
             this.showNoResponse = true;
           }
         }).catch((error) => {
           this.showSpinner = false;
+          this.showNoResponse = true;
+          this.searchResponseText = '';
           console.log(error);
         });
     },
