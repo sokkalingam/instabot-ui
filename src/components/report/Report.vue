@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="report">
 
     <div class="row">
       <div class="form-group form-inline col-md-12">
@@ -98,6 +98,8 @@ export default {
 </script>
 
 <style scoped>
-
+.report {
+  padding: 20px;
+}
 
 </style>

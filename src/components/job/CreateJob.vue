@@ -60,10 +60,10 @@
         </div>
 
         <div class="row">
-          <div class="col-xs-2">
+          <div class="col-md-2">
             <button type="button" v-on:click="runJob" class="btn btn-primary btn-lg">Run Job</button>
           </div>
-          <div class="col-xs-2">
+          <div class="col-md-2">
             <button type="button" v-on:click="savePreset" class="btn btn-warning btn-lg">Save Preset</button>
           </div>
         </div>

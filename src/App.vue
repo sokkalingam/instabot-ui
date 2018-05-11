@@ -44,10 +44,6 @@ li > a.router-link-exact-active {
   border-radius: 10px;
 }
 
-.nav {
-  padding-bottom: 20px;
-}
-
 html {
   height: 100vh;
 }
@@ -58,8 +54,9 @@ body {
 }
 
 .logo {
-  height: 100px;
-  margin-bottom: 20px;
+  height: 50px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 </style>

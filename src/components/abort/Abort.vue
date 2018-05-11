@@ -86,7 +86,7 @@ export default {
 <style scoped>
 
 .abortJob {
-  padding: 50px;
+  padding: 20px;
 }
 
 </style>
