@@ -4,7 +4,8 @@
     <div class="row">
       <div class="form-group form-inline col-md-12">
         <label for="username">Instagram Username:</label>
-        <input type="text" v-model="username" class="form-control" v-on:keydown.enter="search" id="userName">
+        <input type="text" v-model="username" class="form-control"
+          v-on:keydown.enter="search" v-on:keydown="onKeydown" id="userName">
         <button type="button" v-on:click="search" class="btn btn-info">Get Report</button>
       </div>
     </div>
@@ -65,6 +66,10 @@ export default {
     }
   },
   methods: {
+    onKeydown() {
+      this.showNoResponse = false;
+      this.searchResponseText = '';
+    },
     search() {
       if (!this.username) return;
       console.log(this.username);
