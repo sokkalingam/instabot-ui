@@ -45,7 +45,7 @@
 <script>
 
 import { ConfigConstants } from '../../models/ConfigConstants'
-import dateFormat from 'dateFormat'
+import dateFormat from 'dateformat'
 
 export default {
   name: 'report',
