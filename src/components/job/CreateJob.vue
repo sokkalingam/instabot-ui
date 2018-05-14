@@ -22,14 +22,19 @@
         </div>
 
         <div class="row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <label for="sessionId">Session Id</label>
             <textarea type="text" v-model="formData.sessionId" class="form-control" id="sessionId" rows="5"></textarea>
           </div>
-          <div class="form-group col-md-6">
-            <label for="hashtags">Hashtags (Ex: BestDayEver, happyfriday)</label>
+          <div class="form-group col-md-4">
+            <label for="hashtags">Hashtags</label>
             <textarea type="text" v-model="formData.hashtagText" class="form-control"
-              v-on:change="formatHashtag" id="hashtags" rows="5"></textarea>
+              v-on:change="formatHashtag" id="hashtags" rows="5" v-bind:placeholder="getHashtagsPlaceHolder()"></textarea>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="hashtags">Comments</label>
+            <textarea type="text" v-model="formData.commentsText" class="form-control"
+              v-on:change="formatComments" id="hashtags" rows="5" v-bind:placeholder="getCommentsPlaceHolder()"></textarea>
           </div>
         </div>
 
@@ -106,7 +111,9 @@ export default {
         timeMax: 30,
         maxNoOfFollowers: 500,
         hashtagText: '',
-        hashtags: []
+        hashtags: [],
+        commentsText: '',
+        comments: []
       };
     },
     showForm () {
@@ -120,23 +127,44 @@ export default {
       this.errorMessage = '';
     },
     formatHashtag() {
-      console.log(this.formData.hashtagText);
       this.hashtagTextToArray();
       this.hashtagArrayToText();
     },
     hashtagTextToArray() {
-      this.formData.hashtags = this.formData.hashtagText.replaceAll(" ", "")
+      if (this.formData.hashtagText) {
+        this.formData.hashtags = this.formData.hashtagText.replaceAll(" ", "")
         .toLowerCase().split(",");
+      }
     },
     hashtagArrayToText() {
-      if (Array.isArray(this.formData.hashtags))
-        this.formData.hashtagText = this.formData.hashtags.join(", ");
+      if (Array.isArray(this.formData.hashtags)) {
+          this.formData.hashtagText = this.formData.hashtags.join(", ");
+      } else {
+        this.formData.hashtags = [];
+      }
+    },
+    formatComments() {
+      this.commentTextToArray();
+      this.commentArrayToText();
+    },
+    commentTextToArray() {
+      if (this.formData.commentsText) {
+          this.formData.comments = this.formData.commentsText.split("\n");
+      } else {
+        this.formData.comments = [];
+      }
+    },
+    commentArrayToText() {
+      if (Array.isArray(this.formData.comments)) {
+          this.formData.commentsText = this.formData.comments.join("\n");
+      }
     },
     runJob() {
       this.showSpinner = true;
       this.resetMessages();
       this.hashtagTextToArray();
-      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/looplike`, this.formData)
+      this.commentTextToArray();
+      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/loop`, this.formData)
         .then((response) => {
           this.showSpinner = false;
           console.log(response);
@@ -157,6 +185,7 @@ export default {
           console.log(response);
           this.formData = this.$_.get(response, "body.data", {});
           this.hashtagArrayToText();
+          this.commentArrayToText();
         }).catch((error) => {
           this.showSpinner = false;
           console.log(error);
@@ -177,6 +206,12 @@ export default {
           let errorObj = response.body.errors[0];
           this.errorMessage = errorObj.defaultMessage;
       });
+    },
+    getCommentsPlaceHolder() {
+      return "Great click\nLoved it\nI love your page";
+    },
+    getHashtagsPlaceHolder() {
+      return "BestDayEver, happyfriday, iLoveInstaBot";
     }
   }
 }

@@ -27,6 +27,10 @@
               <td data-field="photosLiked">{{report.photosLiked}}</td>
           </tr>
           <tr>
+              <th data-field="photosCommented" class="key">Photos Commented</th>
+              <td data-field="photosCommented">{{report.photosCommented}}</td>
+          </tr>
+          <tr>
               <th data-field="currentHashtag" class="key">Current Hashtag</th>
               <td data-field="currentHashtag">{{report.currentHashtag}}</td>
           </tr>
