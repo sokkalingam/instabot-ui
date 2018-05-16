@@ -33,6 +33,10 @@
           </div>
           <div class="form-group col-md-4">
             <label for="hashtags">Comments</label>
+            <span class="text-right">
+              <input class="form-check-input" type="checkbox" v-model="formData.commentOnly" id="commentOnly">
+              <span class="form-check-label" for="commentOnly">Comment Only</span>
+            </span>
             <textarea type="text" v-model="formData.commentsText" class="form-control"
               v-on:change="formatComments" id="hashtags" rows="5" v-bind:placeholder="getCommentsPlaceHolder()"></textarea>
           </div>
@@ -113,7 +117,8 @@ export default {
         hashtagText: '',
         hashtags: [],
         commentsText: '',
-        comments: []
+        comments: [],
+        commentOnly: false
       };
     },
     showForm () {
