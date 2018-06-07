@@ -44,12 +44,12 @@
 
         <div class="row">
           <div class="form-group col-md-4">
-            <label for="noOfPhotos">Number of Photos:</label>
-            <input type="number" v-model="formData.noOfPhotos" class="form-control" id="noOfPhotos">
+            <label for="noOfPhotos">Number of Posts:</label>
+            <input type="number" min="1" v-model="formData.noOfPhotos" class="form-control" id="noOfPhotos">
           </div>
           <div class="form-group col-md-4">
             <label for="noOfTimesToLoop">Loop Count:</label>
-            <input type="number" v-model="formData.noOfTimesToLoop" class="form-control" id="noOfTimesToLoop">
+            <input type="number" min="1" v-model="formData.noOfTimesToLoop" class="form-control" id="noOfTimesToLoop">
           </div>
           <div class="form-group col-md-4">
             <label for="maxNoOfFollowers">Maximum Followers:</label>
@@ -65,6 +65,15 @@
           <div class="form-group col-md-4">
             <label for="timeMax">Maximum Wait Time:</label>
             <input type="number" v-model="formData.timeMax" class="form-control" id="timeMax">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group form-inline col-md-12">
+            <h3>
+              <label for="presetName">Total Posts:</label>
+              <span class="label label-default">{{getTotalNumberOfPosts()}}</span>
+            </h3>
           </div>
         </div>
 
@@ -120,6 +129,9 @@ export default {
         comments: [],
         commentOnly: false
       };
+    },
+    getTotalNumberOfPosts() {
+      return this.formData.hashtags.length * this.formData.noOfPhotos * this.formData.noOfTimesToLoop;              
     },
     showForm () {
       this.formVisible = true;
