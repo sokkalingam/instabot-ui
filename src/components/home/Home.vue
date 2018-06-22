@@ -1,5 +1,5 @@
 <template>
-  <h1>{{title}}</h1>
+  <h3>{{title}}</h3>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
   name: 'home',
   data() {
     return {
-      title: 'Welcome to Instabot'
+      title: 'Welcome to InstaBot!'
     }
   }
 }
