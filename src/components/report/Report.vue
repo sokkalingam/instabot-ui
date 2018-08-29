@@ -38,6 +38,7 @@
       </table>
       <div v-if="showNoResponse">
         <h4>No job is currently running for {{this.username}}</h4>
+        <h4 class="text-primary">If you have just triggered a job, please wait a few seconds to see the report</h4>
       </div>
 
     </div>
@@ -67,6 +68,13 @@ export default {
         photosCommented: '',
         currentHashtag: ''
       }
+    }
+  },
+  props: ['id'],
+  created: function () {
+    if (this.id) {
+      this.username = this.id;
+      this.search();
     }
   },
   methods: {

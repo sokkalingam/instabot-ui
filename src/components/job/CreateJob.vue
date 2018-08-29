@@ -5,19 +5,26 @@
     <div class="alert alert-danger" role="alert" v-if="errorMessage">
       <p>{{errorMessage}}</p>
     </div>
-    <div class="alert alert-success" role="alert" v-else-if="successMessage">
-      <p>{{successMessage}}</p>
+    <div v-else-if="successMessage">
+      <div class="alert alert-success" role="alert">
+        <p>{{successMessage}}</p>
+      </div>
     </div>
 
     <div v-if='formVisible'>
 
       <form>
-
+        
         <div class="row">
-          <div class="form-group form-inline col-md-12">
+          <div class="form-group form-inline col-md-6">
             <label for="presetName">Preset Name:</label>
             <input type="text" v-model="presetName" class="form-control" id="presetName">
             <button type="button" v-on:click="lookupPreset" class="btn btn-info">Lookup Preset</button>
+          </div>
+
+          <div class="form-group form-inline col-md-6">
+            <label for="username">Instagram Username:</label>
+            <input type="text" v-model="formData.username" class="form-control" id="username">
           </div>
         </div>
 
@@ -90,8 +97,17 @@
 
     </div>
 
-    <button type="button" class="btn btn-lg btn-info"
-      v-on:click="showForm" v-if="!formVisible">Submit Another Job</button>
+    <div v-else>
+      <button type="button" class="btn btn-lg btn-info"
+        v-on:click="showForm">Submit Another Job</button>
+
+      <a :href="'/#/report?id=' + formData.username">
+          <button type="button" class="btn btn-success btn-lg"
+            v-if="formData.username">
+            View Report
+          </button>
+      </a>
+    </div>
 
     <spinner v-bind:showSpinner="showSpinner"></spinner>
 
@@ -117,6 +133,7 @@ export default {
   methods: {
     getDefaultForm() {
       return {
+        username: '',
         sessionId: '',
         noOfPhotos: 5,
         noOfTimesToLoop: 10,
