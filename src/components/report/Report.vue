@@ -15,8 +15,16 @@
       <table class="table table-striped table-bordered" v-if="searchResponseText">
         <tbody>
           <tr>
+              <th data-field="jobStatus" class="key">Job Status</th>
+              <td data-field="jobStatus">{{report.jobStatus}}</td>
+          </tr>
+          <tr>
               <th data-field="startTime" class="key">Start Time</th>
               <td data-field="startTime">{{formatDate(report.startTime)}}</td>
+          </tr>
+          <tr v-if="report.endTime">
+              <th data-field="endTime" class="key">End Time</th>
+              <td data-field="endTime">{{formatDate(report.endTime)}}</td>
           </tr>
           <tr>
               <th data-field="currentLoop" class="key">Current Loop</th>
@@ -62,7 +70,9 @@ export default {
       showNoResponse: false,
       showSpinner: false,
       report: {
+        jobStatus: '',
         startTime: '',
+        endTime: '',
         currentLoop: '',
         photosLiked: '',
         photosCommented: '',
@@ -84,12 +94,10 @@ export default {
     },
     search() {
       if (!this.username) return;
-      console.log(this.username);
       this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.username}`)
         .then((response) => {
           this.showSpinner = false;
-          console.log("search", response);
           if (response.bodyText) {
             this.searchResponseText = response.bodyText;
             this.report = JSON.parse(response.bodyText);
@@ -106,7 +114,6 @@ export default {
         });
     },
     formatDate(dateString) {
-      console.log(dateString);
       if (dateString) {
         let date = new Date(dateString);
         return dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
