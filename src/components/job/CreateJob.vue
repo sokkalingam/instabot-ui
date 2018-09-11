@@ -230,7 +230,7 @@ export default {
     },
     savePreset() {
       this.showSpinner = true;
-      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/presets/add`, this.presetData)
+      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/presets/`, this.presetData)
       .then((response) => {
           this.successMessage = response.bodyText;
       }).catch((response) => {
