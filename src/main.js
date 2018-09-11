@@ -21,7 +21,7 @@ String.prototype.replaceAll = function(target, replacement) {
 };
 
 // For checking cache issue
-console.log("Instabot-UI", "05SEP2018-3:45PM");
+console.log("Instabot-UI", "11SEP2018-11:20AM");
 
 /* eslint-disable no-new */
 new Vue({

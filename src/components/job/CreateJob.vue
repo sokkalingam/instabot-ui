@@ -18,33 +18,33 @@
         <div class="row">
           <div class="form-group form-inline col-md-6">
             <label for="presetName">Preset Name:</label>
-            <input type="text" v-model="presetName" class="form-control" id="presetName">
-            <button type="button" v-on:click="lookupPreset" class="btn btn-info">Lookup Preset</button>
+            <input type="text" v-model="presetData.name" class="form-control" id="presetName">
+            <button type="button" v-on:click="lookupPreset" v-bind:disabled="isLookUpPresetDisabled()" class="btn btn-info">Lookup Preset</button>
           </div>
 
           <div class="form-group form-inline col-md-6">
             <label for="username">Instagram Username:</label>
-            <input type="text" v-model="formData.username" class="form-control" id="username">
+            <input type="text" v-model="presetData.data.username" class="form-control" id="username">
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col-md-4">
             <label for="sessionId">Session Id</label>
-            <textarea type="text" v-model="formData.sessionId" class="form-control" id="sessionId" rows="5"></textarea>
+            <textarea type="text" v-model="presetData.data.sessionId" class="form-control" id="sessionId" rows="5"></textarea>
           </div>
           <div class="form-group col-md-4">
             <label for="hashtags">Hashtags</label>
-            <textarea type="text" v-model="formData.hashtagText" class="form-control"
+            <textarea type="text" v-model="presetData.data.hashtagText" class="form-control"
               v-on:change="formatHashtag" id="hashtags" rows="5" v-bind:placeholder="getHashtagsPlaceHolder()"></textarea>
           </div>
           <div class="form-group col-md-4">
             <label for="hashtags">Comments</label>
             <span class="text-right">
-              <input class="form-check-input" type="checkbox" v-model="formData.commentOnly" id="commentOnly">
+              <input class="form-check-input" type="checkbox" v-model="presetData.data.commentOnly" id="commentOnly">
               <span class="form-check-label" for="commentOnly">Comment Only</span>
             </span>
-            <textarea type="text" v-model="formData.commentsText" class="form-control"
+            <textarea type="text" v-model="presetData.data.commentsText" class="form-control"
               v-on:change="formatComments" id="hashtags" rows="5" v-bind:placeholder="getCommentsPlaceHolder()"></textarea>
           </div>
         </div>
@@ -52,26 +52,26 @@
         <div class="row">
           <div class="form-group col-md-4">
             <label for="noOfPhotos">Number of Posts:</label>
-            <input type="number" min="1" v-model="formData.noOfPhotos" class="form-control" id="noOfPhotos">
+            <input type="number" min="1" v-model="presetData.data.noOfPhotos" class="form-control" id="noOfPhotos">
           </div>
           <div class="form-group col-md-4">
             <label for="noOfTimesToLoop">Loop Count:</label>
-            <input type="number" min="1" v-model="formData.noOfTimesToLoop" class="form-control" id="noOfTimesToLoop">
+            <input type="number" min="1" v-model="presetData.data.noOfTimesToLoop" class="form-control" id="noOfTimesToLoop">
           </div>
           <div class="form-group col-md-4">
             <label for="maxNoOfFollowers">Maximum Followers:</label>
-            <input type="number" v-model="formData.maxNoOfFollowers" class="form-control" id="maxNoOfFollowers">
+            <input type="number" v-model="presetData.data.maxNoOfFollowers" class="form-control" id="maxNoOfFollowers">
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col-md-4">
             <label for="timeMin">Minimum Wait Time:</label>
-            <input type="number" v-model="formData.timeMin" class="form-control" id="timeMin">
+            <input type="number" v-model="presetData.data.timeMin" class="form-control" id="timeMin">
           </div>
           <div class="form-group col-md-4">
             <label for="timeMax">Maximum Wait Time:</label>
-            <input type="number" v-model="formData.timeMax" class="form-control" id="timeMax">
+            <input type="number" v-model="presetData.data.timeMax" class="form-control" id="timeMax">
           </div>
         </div>
 
@@ -101,9 +101,9 @@
       <button type="button" class="btn btn-lg btn-info"
         v-on:click="showForm">Submit Another Job</button>
 
-      <a :href="'/#/report?id=' + formData.username">
+      <a :href="'/#/report?id=' + presetData.data.username">
           <button type="button" class="btn btn-success btn-lg"
-            v-if="formData.username">
+            v-if="presetData.data.username">
             View Report
           </button>
       </a>
@@ -123,14 +123,22 @@ export default {
   data() {
     return {
       formVisible: true,
-      presetName: '',
       successMessage: '',
       errorMessage: '',
       showSpinner: false,
-      formData: this.getDefaultForm()
+      presetData: this.getDefaultPresetData()
     }
   },
+  created: function() {
+      this.lookupPreset();
+  },
   methods: {
+    getDefaultPresetData() {
+      return {
+        name: '',
+        data: this.getDefaultForm()
+      }
+    },
     getDefaultForm() {
       return {
         username: '',
@@ -148,7 +156,7 @@ export default {
       };
     },
     getTotalNumberOfPosts() {
-      return this.formData.hashtags.length * this.formData.noOfPhotos * this.formData.noOfTimesToLoop;              
+      return this.presetData.data.hashtags.length * this.presetData.data.noOfPhotos * this.presetData.data.noOfTimesToLoop;
     },
     showForm () {
       this.formVisible = true;
@@ -165,16 +173,16 @@ export default {
       this.hashtagArrayToText();
     },
     hashtagTextToArray() {
-      if (this.formData.hashtagText) {
-        this.formData.hashtags = this.formData.hashtagText.replaceAll(" ", "")
+      if (this.presetData.data.hashtagText) {
+        this.presetData.data.hashtags = this.presetData.data.hashtagText.replaceAll(" ", "")
         .toLowerCase().split(",");
       }
     },
     hashtagArrayToText() {
-      if (Array.isArray(this.formData.hashtags)) {
-          this.formData.hashtagText = this.formData.hashtags.join(", ");
+      if (Array.isArray(this.presetData.data.hashtags)) {
+          this.presetData.data.hashtagText = this.presetData.data.hashtags.join(", ");
       } else {
-        this.formData.hashtags = [];
+        this.presetData.data.hashtags = [];
       }
     },
     formatComments() {
@@ -182,15 +190,15 @@ export default {
       this.commentArrayToText();
     },
     commentTextToArray() {
-      if (this.formData.commentsText) {
-          this.formData.comments = this.formData.commentsText.split("\n");
+      if (this.presetData.data.commentsText) {
+          this.presetData.data.comments = this.presetData.data.commentsText.split("\n");
       } else {
-        this.formData.comments = [];
+        this.presetData.data.comments = [];
       }
     },
     commentArrayToText() {
-      if (Array.isArray(this.formData.comments)) {
-          this.formData.commentsText = this.formData.comments.join("\n");
+      if (Array.isArray(this.presetData.data.comments)) {
+          this.presetData.data.commentsText = this.presetData.data.comments.join("\n");
       }
     },
     runJob() {
@@ -198,54 +206,46 @@ export default {
       this.resetMessages();
       this.hashtagTextToArray();
       this.commentTextToArray();
-      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/loop`, this.formData)
+      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/loop`, this.presetData.data)
         .then((response) => {
-          this.showSpinner = false;
-          console.log(response);
           this.hideForm();
           this.successMessage = response.bodyText;
         }).catch((response) => {
-          this.showSpinner = false;
-          console.log(response);
           let errorObj = response.body.errors[0];
           this.errorMessage = errorObj.defaultMessage;
-        });
+        }).finally(() => this.showSpinner = false);
     },
     lookupPreset() {
       this.showSpinner = true;
-      this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetName}`)
+      this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetData.name}`)
         .then((response) => {
-          this.showSpinner = false;
-          console.log(response);
-          this.formData = this.$_.get(response, "body.data", {});
-          this.hashtagArrayToText();
-          this.commentArrayToText();
-        }).catch((error) => {
-          this.showSpinner = false;
-          console.log(error);
-        });
+          if (response && response.body) {
+            this.presetData = response.body;
+            this.hashtagArrayToText();
+            this.commentArrayToText();
+          } else {
+            this.presetData = this.getDefaultPresetData();
+          }
+        }).finally(() => this.showSpinner = false);
     },
     savePreset() {
       this.showSpinner = true;
-      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/presets/add`, {
-        name: this.presetName,
-        data: this.formData
-      }).then((response) => {
-          this.showSpinner = false;
-          console.log(response);
+      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/presets/add`, this.presetData)
+      .then((response) => {
           this.successMessage = response.bodyText;
       }).catch((response) => {
-          this.showSpinner = false;
-          console.log(response);
           let errorObj = response.body.errors[0];
           this.errorMessage = errorObj.defaultMessage;
-      });
+      }).finally(() => this.showSpinner = false);
     },
     getCommentsPlaceHolder() {
       return "Great click\nLoved it\nI love your page";
     },
     getHashtagsPlaceHolder() {
       return "BestDayEver, happyfriday, iLoveInstaBot";
+    },
+    isLookUpPresetDisabled() {
+      return this.$_.get(this, "presetData.name", "").trim().length === 0;
     }
   }
 }
