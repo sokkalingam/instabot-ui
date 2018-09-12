@@ -4,9 +4,9 @@
     <div class="row">
       <div class="form-group form-inline col-md-12">
         <label for="username">Instagram Username:</label>
-        <input type="text" v-model="username" class="form-control"
+        <input type="text" v-model="report.username" class="form-control"
           v-on:keydown.enter="search" v-on:keydown="onKeydown" id="userName">
-        <button type="button" v-on:click="search" class="btn btn-info">Get Report</button>
+        <button type="button" v-on:click="search" v-bind:disabled="isSearchButtonDisabled()" class="btn btn-info">Get Report</button>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
         </tbody>
       </table>
       <div v-if="showNoResponse">
-        <h4>No job is currently running for {{this.username}}</h4>
+        <h4>No job is currently running for your user</h4>
         <h4 class="text-primary">If you have just triggered a job, please wait a few seconds to see the report</h4>
       </div>
 
@@ -65,11 +65,11 @@ export default {
   name: 'report',
   data() {
     return {
-      username:'',
       searchResponseText: '',
       showNoResponse: false,
       showSpinner: false,
       report: {
+        username: '',
         jobStatus: '',
         startTime: '',
         endTime: '',
@@ -82,10 +82,9 @@ export default {
   },
   props: ['id'],
   created: function () {
-    if (this.id) {
-      this.username = this.id;
-      this.search();
-    }
+    if (this.id)
+      this.report.username = this.id;
+    this.search();
   },
   methods: {
     onKeydown() {
@@ -93,9 +92,8 @@ export default {
       this.searchResponseText = '';
     },
     search() {
-      if (!this.username) return;
       this.showSpinner = true;
-      this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.username}`)
+      this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.report.username}`)
         .then((response) => {
           this.showSpinner = false;
           if (response.bodyText) {
@@ -119,6 +117,9 @@ export default {
         return dateFormat(date, "dddd, mmmm dS, yyyy, h:MM:ss TT");
       }
       return '';
+    },
+    isSearchButtonDisabled() {
+      return this.report.username.trim().length === 0;
     }
   }
 }
