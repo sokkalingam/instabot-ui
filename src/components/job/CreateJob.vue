@@ -130,7 +130,10 @@ export default {
     }
   },
   created: function() {
-      this.lookupPreset();
+      if (localStorage.presetName) {
+        this.presetData.name = localStorage.presetName;
+        this.lookupPreset();
+      }
   },
   methods: {
     getDefaultPresetData() {
@@ -216,6 +219,9 @@ export default {
         }).finally(() => this.showSpinner = false);
     },
     lookupPreset() {
+      if (!this.presetData.name)
+        return;
+      localStorage.presetName = this.presetData.name;
       this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetData.name}`)
         .then((response) => {

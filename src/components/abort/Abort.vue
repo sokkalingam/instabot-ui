@@ -46,8 +46,17 @@ export default {
       showSpinner: false
     }
   },
+  created: function() {
+      if (localStorage.presetName) {
+        this.presetName = localStorage.presetName;
+        this.lookupPreset();
+      }
+  },
   methods: {
     lookupPreset() {
+      if (!this.presetName)
+        return;
+      localStorage.presetName = this.presetName;
       this.showSpinner = true;
       this.resetMessages();
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/presets/${this.presetName}`)

@@ -82,6 +82,8 @@ export default {
   },
   props: ['id'],
   created: function () {
+    if (localStorage.username)
+      this.report.username = localStorage.username;
     if (this.id)
       this.report.username = this.id;
     this.search();
@@ -92,6 +94,9 @@ export default {
       this.searchResponseText = '';
     },
     search() {
+      if (!this.report.username)
+        return;
+      localStorage.username = this.report.username;
       this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.report.username}`)
         .then((response) => {
