@@ -76,7 +76,7 @@ export default {
     abortJob() {
       this.showSpinner = true;
       this.resetMessages();
-      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/session/kill`, this.formData.sessionId)
+      this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/sessions/kill`, this.formData.sessionId)
         .then((response) => {
           this.showSpinner = false;
           console.log(response);
