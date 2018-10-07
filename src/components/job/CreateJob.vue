@@ -88,10 +88,11 @@
         </div>
 
         <div class="row">
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-8">
             <label for="email">Email</label>
             <small class="blink">(Get notified when job is finished)</small>
-            <input type="text" v-model="presetData.data.email" class="form-control" id="email">
+            <input type="text" v-model="presetData.data.email" class="form-control" id="email"
+              placeholder="abc@gmail.com, def@gmail.com">
           </div>
         </div>
 
