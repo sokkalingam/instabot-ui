@@ -17,21 +17,21 @@
         
         <div class="row">
           <div class="form-group col-md-12">
-            <label for="name">Name:</label>
+            <label for="name">Name<required></required></label>
             <input type="text" v-model="feedback.name" class="form-control" id="name">
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col-md-12">
-            <label for="subject">Subject:</label>
+            <label for="subject">Subject<required></required></label>
             <input type="text" v-model="feedback.subject" class="form-control" id="subject">
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col-md-12">
-            <label for="sessionId">Body:</label>
+            <label for="sessionId">Body<required></required></label>
             <textarea type="text" v-model="feedback.body" class="form-control" id="body" rows="5"></textarea>
           </div>
         </div>

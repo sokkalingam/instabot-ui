@@ -5,11 +5,13 @@ import VueResource from 'vue-resource'
 import lodash from 'lodash'
 
 import Spinner from './components/common/spinner/Spinner'
+import Required from './components/common/Required'
 
 Vue.config.productionTip = false
 Vue.use(VueResource);
 
 Vue.component('spinner', Spinner);
+Vue.component('required', Required);
 
 // Adding lodash
 Object.defineProperty(Vue.prototype, '$_', { value: lodash });
@@ -19,9 +21,6 @@ Object.defineProperty(Vue.prototype, '$_', { value: lodash });
 String.prototype.replaceAll = function(target, replacement) {
   return this.split(target).join(replacement);
 };
-
-// For checking cache issue
-console.log("Instabot-UI", "11SEP2018-11:20AM");
 
 /* eslint-disable no-new */
 new Vue({
