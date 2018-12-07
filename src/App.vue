@@ -11,7 +11,7 @@
       <li><router-link to="/abort">Abort Job</router-link></li>
       <li><router-link to="/feedback">Feedback</router-link></li>
     </ul>
-    <div class="notification alert alert-danger alert-dismissible" role="alert" v-if="notification">
+    <div class="notification alert alert-info alert-dismissible" role="alert" v-if="notification">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
