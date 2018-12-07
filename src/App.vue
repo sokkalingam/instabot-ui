@@ -11,13 +11,43 @@
       <li><router-link to="/abort">Abort Job</router-link></li>
       <li><router-link to="/feedback">Feedback</router-link></li>
     </ul>
+    <div class="notification alert alert-danger alert-dismissible" role="alert" v-if="notification">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>{{notification.title}}</strong>
+      <p>{{notification.message}}</p>
+    </div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import { ConfigConstants } from './models/ConfigConstants';
+
 export default {
-  name: 'App'
+  name: 'App',
+  data() {
+    return {
+      notification: null
+    }
+  },
+  created: function() {
+    this.lookupNotification();
+  },
+  methods: {
+    lookupNotification() {
+      this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/notification/`)
+        .then((response) => {
+          this.showSpinner = false;
+          console.log(response);
+          this.notification = response.body;
+        }).catch((error) => {
+          this.showSpinner = false;
+          console.log(error);
+        });
+    }
+  }
 }
 </script>
 
@@ -58,6 +88,10 @@ body {
   height: 50px;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.notification {
+  margin-top: 10px;
 }
 
 .blink {
