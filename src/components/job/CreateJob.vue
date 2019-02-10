@@ -15,19 +15,25 @@
 
       <form>
 
-        <h4 class="blink"><b>New Features</b> - Email Notification & Feedback Page</h4>
+        <h4 class="blink"><b>New Features</b> - Likes to Comment Ratio & Email Notifications when blocked by Instagram</h4>
 
         <div class="row">
-          <div class="form-group form-inline col-md-6">
-            <label for="presetName">Preset Name:</label>
+          <div class="form-group form-inline col-md-12">
+            <label for="presetName" class="minWidth200px">Preset Name:</label>
             <input type="text" v-model="presetData.name" class="form-control" id="presetName">
             <button type="button" v-on:click="lookupPreset" v-bind:disabled="isLookUpPresetDisabled()" class="btn btn-info">Lookup
               Preset</button>
           </div>
+        </div>
 
+        <div class="row">
           <div class="form-group form-inline col-md-6">
-            <label for="username">Instagram Username:</label>
+            <label for="username" class="minWidth200px">Instagram Username:</label>
             <input type="text" v-model="presetData.data.username" class="form-control" id="username">
+          </div>
+          <div v-if="!presetData.data.commentOnly" class="form-group form-inline col-md-6">
+            <label for="likesToCommentRatio" class="minWidth200px">Likes to Comment Ratio:</label>
+            <input type="number" min="1" v-model="presetData.data.likesToCommentRatio" class="form-control" id="likeToCommentRatio">
           </div>
         </div>
 
@@ -43,7 +49,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="hashtags">Comments</label>
-            <span class="text-right">
+            <span>
               <input class="form-check-input" type="checkbox" v-model="presetData.data.commentOnly" id="commentOnly">
               <span class="form-check-label" for="commentOnly">Comment Only</span>
             </span>
@@ -90,7 +96,7 @@
         <div class="row">
           <div class="form-group col-md-8">
             <label for="email">Email</label>
-            <small class="blink">(Get notified when job is finished)</small>
+            <small class="blink">(Get Email Notifications)</small>
             <input type="text" v-model="presetData.data.email" class="form-control" id="email"
               placeholder="abc@gmail.com, def@gmail.com">
           </div>
@@ -166,7 +172,8 @@
           hashtags: [],
           commentsText: "",
           comments: [],
-          commentOnly: false
+          commentOnly: false,
+          likesToCommentRatio: 1
         };
       },
       getTotalNumberOfPosts() {
@@ -299,5 +306,9 @@
     font-size: 18px;
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+
+  .minWidth200px {
+    min-width: 200px;
   }
 </style>

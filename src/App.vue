@@ -96,10 +96,10 @@ body {
 
 .blink {
 
-    animation:1s blinker linear infinite;
-    -webkit-animation:1s blinker linear infinite;
-    -moz-animation:1s blinker linear infinite;
-     color: #6b4ba0 !important;
+    animation:1.5s blinker linear infinite;
+    -webkit-animation:1.5s blinker linear infinite;
+    -moz-animation:1.5s blinker linear infinite;
+     color: #7100a5 !important;
     }
 
     @-moz-keyframes blinker {  
