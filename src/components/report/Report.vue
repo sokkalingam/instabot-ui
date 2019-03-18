@@ -27,10 +27,6 @@
               <td data-field="endTime">{{formatDate(report.endTime)}}</td>
           </tr>
           <tr>
-              <th data-field="currentLoop" class="key">Current Loop</th>
-              <td data-field="currentLoop">{{report.currentLoop}}</td>
-          </tr>
-          <tr>
               <th data-field="photosLiked" class="key">Photos Liked</th>
               <td data-field="photosLiked">{{report.photosLiked}}</td>
           </tr>
@@ -73,7 +69,6 @@ export default {
         jobStatus: '',
         startTime: '',
         endTime: '',
-        currentLoop: '',
         photosLiked: '',
         photosCommented: '',
         currentHashtag: ''

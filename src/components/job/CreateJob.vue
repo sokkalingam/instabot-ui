@@ -64,23 +64,8 @@
             <input type="number" min="1" v-model="presetData.data.noOfPhotos" class="form-control" id="noOfPhotos">
           </div>
           <div class="form-group col-md-4">
-            <label for="noOfTimesToLoop">Loop Count:</label>
-            <input type="number" min="1" v-model="presetData.data.noOfTimesToLoop" class="form-control" id="noOfTimesToLoop">
-          </div>
-          <div class="form-group col-md-4">
             <label for="maxNoOfFollowers">Maximum Followers:</label>
             <input type="number" v-model="presetData.data.maxNoOfFollowers" class="form-control" id="maxNoOfFollowers">
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="form-group col-md-4">
-            <label for="timeMin">Minimum Wait Time:</label>
-            <input type="number" v-model="presetData.data.timeMin" class="form-control" id="timeMin">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="timeMax">Maximum Wait Time:</label>
-            <input type="number" v-model="presetData.data.timeMax" class="form-control" id="timeMax">
           </div>
         </div>
 
@@ -164,9 +149,6 @@
           email: "",
           sessionId: "",
           noOfPhotos: 5,
-          noOfTimesToLoop: 10,
-          timeMin: 25,
-          timeMax: 30,
           maxNoOfFollowers: 500,
           hashtagText: "",
           hashtags: [],
@@ -179,8 +161,7 @@
       getTotalNumberOfPosts() {
         return (
           this.presetData.data.hashtags.length *
-          this.presetData.data.noOfPhotos *
-          this.presetData.data.noOfTimesToLoop
+          this.presetData.data.noOfPhotos
         );
       },
       showForm() {
@@ -241,7 +222,7 @@
         this.commentTextToArray();
         this.$http
           .post(
-            `${ConfigConstants.SERVER_BASE_URL}/hashtag/loop`,
+            `${ConfigConstants.SERVER_BASE_URL}/sessions/add`,
             this.presetData.data
           )
           .then(response => {
