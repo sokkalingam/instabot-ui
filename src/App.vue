@@ -1,12 +1,14 @@
 <template>
   <div id="app" class="container">
-    <div class="logo">
-      <img class="logo" src="./assets/instabot-logo.png">
+    <div class="logo row">
+        <img class="logo" src="./assets/instabot-logo.png">
+        <img class="logo" src="./assets/instabot-title.png">
     </div>
     <ul class="nav nav-pills nav-justified">
       <li><router-link to="/">Home</router-link></li>
       <li><router-link to="/createjob">Create Job</router-link></li>
       <li><router-link to="/report">View Report</router-link></li>
+      <li><router-link to="/abort">Abort Job</router-link></li>
     </ul>
     <router-view/>
   </div>
@@ -26,7 +28,6 @@ export default {
   color: #2c3e50;
   text-align: center;
   background-color: white;
-  height: 100%;
 }
 
 li > a.router-link-exact-active {
@@ -48,16 +49,17 @@ li > a.router-link-exact-active {
 }
 
 html {
-  height: 100%;
+  height: 100vh;
 }
 
 body {
   background-image: url('./assets/instabot-bg.jpg');
-  height: 100%;
+  height: 100vh;
 }
 
 .logo {
-  height: 200px;
+  height: 100px;
+  margin-bottom: 20px;
 }
 
 </style>

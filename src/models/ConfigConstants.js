@@ -1,3 +1,3 @@
 export const ConfigConstants = {
-  SERVER_BASE_URL: "http://localhost:8080/api"
+  SERVER_BASE_URL: "http://api-instabot.localtunnel.me/api"
 }

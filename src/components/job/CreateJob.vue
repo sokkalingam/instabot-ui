@@ -2,6 +2,13 @@
 
   <div id="createJob">
 
+    <div class="alert alert-danger" role="alert" v-if="errorMessage">
+      <p>{{errorMessage}}</p>
+    </div>
+    <div class="alert alert-success" role="alert" v-else-if="successMessage">
+      <p>{{successMessage}}</p>
+    </div>
+
     <div v-if='formVisible'>
 
       <form>
@@ -20,7 +27,7 @@
             <textarea type="text" v-model="formData.sessionId" class="form-control" id="sessionId" rows="5"></textarea>
           </div>
           <div class="form-group col-md-6">
-            <label for="hashtags">Hashtags (comma separated)</label>
+            <label for="hashtags">Hashtags (Ex: BestDayEver, happyfriday)</label>
             <textarea type="text" v-model="formData.hashtagText" class="form-control"
               v-on:change="formatHashtag" id="hashtags" rows="5"></textarea>
           </div>
@@ -52,27 +59,21 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-xs-2">
+            <button type="button" v-on:click="runJob" class="btn btn-primary btn-lg">Run Job</button>
+          </div>
+          <div class="col-xs-2">
+            <button type="button" v-on:click="savePreset" class="btn btn-warning btn-lg">Save Preset</button>
+          </div>
+        </div>
+
       </form>
-      <div class="row">
-        <div class="col-xs-2">
-          <button type="button" v-on:click="runJob" class="btn btn-primary btn-lg">Run Job</button>
-        </div>
-        <div class="col-xs-2">
-          <button type="button" v-on:click="savePreset" class="btn btn-warning btn-lg">Save Preset</button>
-        </div>
-      </div>
 
     </div>
 
     <button type="button" class="btn btn-lg btn-info"
       v-on:click="showForm" v-if="!formVisible">Submit Another Job</button>
-
-    <div class="alert alert-success" role="alert" v-if="successMessage">
-      <p>{{successMessage}}</p>
-    </div>
-    <div class="alert alert-danger" role="alert" v-else-if="errorMessage">
-      <p>{{errorMessage}}</p>
-    </div>
 
   </div>
 
@@ -95,13 +96,13 @@ export default {
   methods: {
     getDefaultForm() {
       return {
-        sessionId: 'PASTE YOUR SESSION ID HERE',
+        sessionId: '',
         noOfPhotos: 5,
         noOfTimesToLoop: 10,
         timeMin: 25,
         timeMax: 30,
         maxNoOfFollowers: 500,
-        hashtagText: 'TypeYourhashtagsHere, CommaSeparated',
+        hashtagText: '',
         hashtags: []
       };
     },
@@ -110,6 +111,10 @@ export default {
     },
     hideForm () {
       this.formVisible = false;
+    },
+    resetMessages() {
+      this.successMessage = '';
+      this.errorMessage = '';
     },
     formatHashtag() {
       console.log(this.formData.hashtagText);
@@ -124,6 +129,7 @@ export default {
       this.formData.hashtagText = this.formData.hashtags.join(", ");
     },
     runJob() {
+      this.resetMessages();
       this.hashtagTextToArray();
       this.$http.post(`${ConfigConstants.SERVER_BASE_URL}/hashtag/looplike`, this.formData)
         .then((response) => {
@@ -133,7 +139,7 @@ export default {
         }).catch((response) => {
           console.log(response);
           let errorObj = response.body.errors[0];
-          this.errorMessage = errorObj.field + ' ' + errorObj.defaultMessage;
+          this.errorMessage = errorObj.defaultMessage;
         });
     },
     lookupPreset() {
@@ -156,7 +162,7 @@ export default {
       }).catch((response) => {
           console.log(response);
           let errorObj = response.body.errors[0];
-          this.errorMessage = errorObj.field + ' - ' + errorObj.defaultMessage;
+          this.errorMessage = errorObj.defaultMessage;
       });
     }
   }
@@ -169,16 +175,8 @@ export default {
   #createJob {
     text-align: left;
     font-size: 18px;
-  }
-
-  .row {
-      padding-top: 10px;
-      padding-bottom: 10px;
-  }
-
-  .alert {
-      margin-top: 10px;
-      margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
 </style>
