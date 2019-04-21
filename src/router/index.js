@@ -4,6 +4,7 @@ import Home from '@/components/home/Home'
 import Report from '@/components/report/Report'
 import CreateJob from '@/components/job/CreateJob'
 import Abort from '@/components/abort/Abort'
+import Spinner from '@/components/common/spinner/Spinner'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/abort',
       name: 'Abort',
       component: Abort
+    },
+    {
+      path: '/spinner',
+      name: 'Spinner',
+      component: Spinner
     }
   ],
   mode: 'history'

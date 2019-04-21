@@ -37,6 +37,8 @@
 
     </div>
 
+    <spinner v-bind:showSpinner="showSpinner"></spinner>
+
   </div>
 </template>
 
@@ -52,6 +54,7 @@ export default {
       username:'',
       searchResponseText: '',
       showNoResponse: false,
+      showSpinner: false,
       report: {
         startTime: '',
         currentLoop: '',
@@ -64,8 +67,10 @@ export default {
   methods: {
     search() {
       console.log(this.username);
+      this.showSpinner = true;
       this.$http.get(`${ConfigConstants.SERVER_BASE_URL}/reports/${this.username}`)
         .then((response) => {
+          this.showSpinner = false;
           console.log("search", response);
           if (response.bodyText) {
             this.searchResponseText = response.bodyText;
@@ -75,6 +80,7 @@ export default {
             this.showNoResponse = true;
           }
         }).catch((error) => {
+          this.showSpinner = false;
           console.log(error);
         });
     },

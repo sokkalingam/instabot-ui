@@ -4,8 +4,12 @@ import router from './router'
 import VueResource from 'vue-resource'
 import lodash from 'lodash'
 
+import Spinner from './components/common/spinner/Spinner'
+
 Vue.config.productionTip = false
 Vue.use(VueResource);
+
+Vue.component('spinner', Spinner);
 
 // Adding lodash
 Object.defineProperty(Vue.prototype, '$_', { value: lodash });
