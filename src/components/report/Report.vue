@@ -38,6 +38,10 @@
               <th data-field="currentHashtag" class="key">Current Hashtag</th>
               <td data-field="currentHashtag">{{report.currentHashtag}}</td>
           </tr>
+          <tr>
+              <th data-field="currentHashtag" class="key">Skipped Hashtags</th>
+              <td data-field="currentHashtag">{{report.skippedHashtags.join(", ")}}</td>
+          </tr>
         </tbody>
       </table>
       <div v-if="showNoResponse">
@@ -71,7 +75,8 @@ export default {
         endTime: '',
         photosLiked: '',
         photosCommented: '',
-        currentHashtag: ''
+        currentHashtag: '',
+        skippedHashtags: []
       }
     }
   },
